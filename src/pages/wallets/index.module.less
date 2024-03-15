@@ -1,0 +1,21 @@
+.wallets_container {
+  width: 300px;
+  // height: 400px;
+  outline: 1px solid #838383;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.wallet_item{
+  height: 40px;
+  // background-color: bisque;
+  transition: all .3s;
+  border-radius: 12px;
+  &:hover:not(.wallet_active){
+    background-color: rgba(152, 232, 156, 0.674);
+  }
+}
+
+.wallet_active{
+  background-color: rgba(255, 0, 0, 0.4);
+}
