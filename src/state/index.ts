@@ -1,10 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { useDispatch, useSelector } from "react-redux"
 import counterReducer from "./counter"
+import userReducer from "./user/reducer"
+import applicationReducer from "./application/reducer"
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    counter: counterReducer, // test counter
+
+    user: userReducer,
+    application: applicationReducer,
   },
 })
 
