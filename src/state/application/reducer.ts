@@ -12,7 +12,7 @@ const initialState: ApplicationState = {
   // openModal: null
 }
 
-const applicationReducer = createSlice({
+const applicationSlice = createSlice({
   name: "application",
   initialState,
   reducers: {
@@ -28,5 +28,5 @@ const applicationReducer = createSlice({
   },
 })
 
-export default applicationReducer.reducer
-export const { updateBlockNumber } = applicationReducer.actions
+export default applicationSlice.reducer
+export const { updateBlockNumber } = applicationSlice.actions

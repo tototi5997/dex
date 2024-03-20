@@ -6,12 +6,16 @@ import getLibrary from "utils/getLibrary"
 import { Provider } from "react-redux"
 import store from "./state"
 import ModalRoot, { IModalRoot, ModalContext } from "./modals/modal-root"
+import useTheme from "./hooks/useTheme"
 
 const App = () => {
   const modalRef = useRef<IModalRoot>()
 
   // 如果需要做路由级别的权限控制，可以在这里处理
   const element = useRoutes(routerConfig)
+
+  useTheme() // init theme
+
   return (
     <>
       <ModalContext.Provider value={modalRef}>

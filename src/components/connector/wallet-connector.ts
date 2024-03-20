@@ -7,7 +7,7 @@ import { Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount } from "@unis
 import { useMulticallContract } from "@/hooks/useContract"
 import { useMemo } from "react"
 import { isAddress } from "@/utils"
-import { useSingleContractMultipleData } from "@/state/muticall/hooks"
+import { useSingleContractMultipleData } from "@/state/multicall/hooks"
 
 const NETWORK_URL = import.meta.env.VITE_NETWORK_URL
 // const FORMATIC_KEY = import.meta.env.REACT_APP_FORTMATIC_KEY

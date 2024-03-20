@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from "react-redux"
 import counterReducer from "./counter"
 import userReducer from "./user/reducer"
 import applicationReducer from "./application/reducer"
+import muticallReducer from "./multicall/reducer"
+import transactionsReducer from "./transactions/reducer"
+import swapReducer from "./swap/reducer"
+import mintReducer from "./mint/reducer"
+import burnReducer from "./burn/reducer"
+import listsReducer from "./lists/reducer"
 
 const store = configureStore({
   reducer: {
@@ -10,6 +16,12 @@ const store = configureStore({
 
     user: userReducer,
     application: applicationReducer,
+    multicall: muticallReducer,
+    transactions: transactionsReducer,
+    swap: swapReducer,
+    mint: mintReducer,
+    burn: burnReducer,
+    lists: listsReducer,
   },
 })
 

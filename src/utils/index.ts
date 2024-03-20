@@ -2,6 +2,8 @@ import { getAddress } from "@ethersproject/address"
 import { AddressZero } from "@ethersproject/constants"
 import { Contract } from "@ethersproject/contracts"
 import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers"
+import { ChainId, JSBI, Percent, Token, CurrencyAmount, Currency, ETHER } from "@uniswap/sdk"
+import { BigNumber } from "@ethersproject/bignumber"
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -38,4 +40,14 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
   }
 
   return new Contract(address, ABI, getProviderOrSigner(library, account) as any)
+}
+
+// converts a basis points value to a sdk percent
+export function basisPointsToPercent(num: number): Percent {
+  return new Percent(JSBI.BigInt(num), JSBI.BigInt(10000))
+}
+
+// add 10%
+export function calculateGasMargin(value: BigNumber): BigNumber {
+  return value.mul(BigNumber.from(10000).add(BigNumber.from(1000))).div(BigNumber.from(10000))
 }

@@ -4,7 +4,7 @@ import { Contract } from "@ethersproject/contracts"
 import { useEffect, useMemo } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useActiveWeb3React } from "../../hooks"
-// import { useBlockNumber } from "../application/hooks"
+import { useBlockNumber } from "@/state/application/hooks"
 import { AppDispatch, AppState } from "../index"
 import {
   addMulticallListeners,
@@ -13,7 +13,7 @@ import {
   parseCallKey,
   toCallKey,
   ListenerOptions,
-} from "./actions"
+} from "./reducer"
 
 export interface Result extends ReadonlyArray<any> {
   readonly [key: string]: any
@@ -183,8 +183,8 @@ export function useSingleContractMultipleData(
 
   const results = useCallsData(calls, options)
 
-  // const latestBlockNumber = useBlockNumber()
-  const latestBlockNumber = 0
+  const latestBlockNumber = useBlockNumber()
+  // const latestBlockNumber = 0
 
   return useMemo(() => {
     return results.map((result) => toCallState(result, contract?.interface, fragment, latestBlockNumber))
@@ -224,8 +224,8 @@ export function useMultipleContractSingleData(
 
   const results = useCallsData(calls, options)
 
-  // const latestBlockNumber = useBlockNumber()
-  const latestBlockNumber = 0
+  const latestBlockNumber = useBlockNumber()
+  // const latestBlockNumber = 0
 
   return useMemo(() => {
     return results.map((result) => toCallState(result, contractInterface, fragment, latestBlockNumber))
@@ -252,8 +252,8 @@ export function useSingleCallResult(
   }, [contract, fragment, inputs])
 
   const result = useCallsData(calls, options)[0]
-  // const latestBlockNumber = useBlockNumber()
-  const latestBlockNumber = 0
+  const latestBlockNumber = useBlockNumber()
+  // const latestBlockNumber = 0
 
   return useMemo(() => {
     return toCallState(result, contract?.interface, fragment, latestBlockNumber)

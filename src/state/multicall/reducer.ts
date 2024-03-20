@@ -35,6 +35,7 @@ export interface ListenerOptions {
 
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
 const LOWER_HEX_REGEX = /^0x[a-f0-9]*$/
+
 export function toCallKey(call: Call): string {
   if (!ADDRESS_REGEX.test(call.address)) {
     throw new Error(`Invalid address: ${call.address}`)
@@ -45,13 +46,24 @@ export function toCallKey(call: Call): string {
   return `${call.address}-${call.callData}`
 }
 
+export function parseCallKey(callKey: string): Call {
+  const pcs = callKey.split("-")
+  if (pcs.length !== 2) {
+    throw new Error(`Invalid call key: ${callKey}`)
+  }
+  return {
+    address: pcs[0],
+    callData: pcs[1],
+  }
+}
+
 export const initialState: MulticallState = {
   // callListeners: {},
   callResults: {},
 }
 
-const muticallReducer = createSlice({
-  name: "muticall",
+const muticallSlice = createSlice({
+  name: "multicall",
   initialState,
   reducers: {
     addMulticallListeners: (
@@ -157,4 +169,11 @@ const muticallReducer = createSlice({
   },
 })
 
-export default muticallReducer.reducer
+export default muticallSlice.reducer
+export const {
+  addMulticallListeners,
+  removeMulticallListeners,
+  fetchingMulticallResults,
+  errorFetchingMulticallResults,
+  updateMulticallResults,
+} = muticallSlice.actions

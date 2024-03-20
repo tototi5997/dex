@@ -5,6 +5,7 @@ import { RouterComponent } from "./router.tsx"
 import App from "./App.tsx"
 import "./index.css"
 import "virtual:svg-icons-register"
+import "./i18n"
 
 window.Buffer = Buffer
 
