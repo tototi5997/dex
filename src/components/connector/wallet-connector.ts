@@ -15,7 +15,7 @@ const PORTIS_ID = import.meta.env.VITE_PORTIS_ID
 const WALLETCONNECT_BRIDGE_URL = import.meta.env.VITE_WALLETCONNECT_BRIDGE_URL
 
 if (typeof NETWORK_URL === "undefined") {
-  console.log(import.meta.env)
+  // console.log(import.meta.env)
   throw new Error(`VITE_NETWORK_URL must be a defined environment variable`)
 }
 

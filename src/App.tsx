@@ -7,6 +7,7 @@ import { Provider } from "react-redux"
 import store from "./state"
 import ModalRoot, { IModalRoot, ModalContext } from "./modals/modal-root"
 import useTheme from "./hooks/useTheme"
+import Web3ReactManager from "./components/Web3ReactManager"
 
 const App = () => {
   const modalRef = useRef<IModalRoot>()
@@ -19,8 +20,12 @@ const App = () => {
   return (
     <>
       <ModalContext.Provider value={modalRef}>
-        <ModalRoot ref={modalRef} />
-        {element}
+        <Web3ReactManager>
+          <>
+            <ModalRoot ref={modalRef} />
+            {element}
+          </>
+        </Web3ReactManager>
       </ModalContext.Provider>
     </>
   )
