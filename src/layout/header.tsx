@@ -21,7 +21,7 @@ const Header = () => {
   const [userBalance, setUserBalance] = useState("")
 
   const connectWallet = async () => {
-    modal?.current?.show("wallet_list")
+    modal?.show("wallet_list")
     // try {
     //   const { ethereum } = window
     //   const accounts = await ethereum?.request({

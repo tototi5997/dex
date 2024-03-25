@@ -1,5 +1,6 @@
 import { ModalProps } from "antd"
 import WalletsList from "./contents/wallets-list"
+import SearchModal from "./contents/search-modal"
 
 interface IModalMain {
   des?: string
@@ -15,6 +16,15 @@ const modalMap = new Map<string, GlobalMoalType>([
     {
       des: "show wallet list to change wallet",
       component: WalletsList,
+      footer: null,
+      width: 400,
+    },
+  ],
+  [
+    "search_modal",
+    {
+      des: "",
+      component: () => <SearchModal />,
       footer: null,
       width: 400,
     },

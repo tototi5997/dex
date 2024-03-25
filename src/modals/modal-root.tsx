@@ -1,9 +1,10 @@
 import React, { useImperativeHandle, useState } from "react"
 import { Modal } from "antd"
 import modalMap, { GlobalMoalType } from "./modals.map"
+import GlobalModal from "."
 
 export interface IModalRoot {
-  show: (key: string) => void
+  show: (key: string, extra?: Record<string, unknown>) => void
   hide: () => void
 }
 
@@ -34,4 +35,4 @@ const ModalRoot = React.forwardRef((_, ref) => {
 })
 
 export default ModalRoot
-export const ModalContext = React.createContext<React.MutableRefObject<IModalRoot | undefined> | undefined>(undefined)
+export const ModalContext = React.createContext<GlobalModal | undefined>(undefined)

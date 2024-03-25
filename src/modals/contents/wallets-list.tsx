@@ -83,7 +83,7 @@ const WalletsList = () => {
     connector &&
       activate(connector, undefined, true)
         .then(() => {
-          modal?.current?.hide()
+          modal?.hide()
         })
         .catch((error) => {
           if (error instanceof UnsupportedChainIdError) {

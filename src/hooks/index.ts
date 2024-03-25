@@ -8,8 +8,9 @@ import { injected } from "@/components/connector/wallet-connector"
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chainId?: ChainId } {
   const context = useWeb3ReactCore<Web3Provider>()
-  const contextNetwork = useWeb3ReactCore<Web3Provider>(NetworkContextName)
-  return context.active ? context : contextNetwork
+  // const contextNetwork = useWeb3ReactCore<Web3Provider>("NETWORK")
+  // return context.active ? context : contextNetwork
+  return context
 }
 
 export function useEagerConnect() {

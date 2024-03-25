@@ -1,7 +1,8 @@
 import { HashRouter, BrowserRouter, RouteObject, Navigate } from "react-router-dom"
 import Home from "./pages/home"
 import NotFoundPage from "./pages/404"
-import Wallet from "./pages/wallets"
+// import Wallet from "./pages/wallets"
+import Swap from "./pages/swap"
 
 export type RouterType = "hash" | "browser"
 
@@ -18,14 +19,14 @@ export const RouterComponent = routerMap[ROUTER_TYPE]
 
 // 路由配置
 export const routerConfig: RouteObject[] = [
-  { path: "/", element: <Navigate to="/home/wallet" replace /> },
+  { path: "/", element: <Navigate to="/home/swap" replace /> },
   {
     path: "/home",
     element: <Home />,
     children: [
       {
-        path: "/home/wallet",
-        element: <Wallet />,
+        path: "/home/swap",
+        element: <Swap />,
       },
     ],
   },

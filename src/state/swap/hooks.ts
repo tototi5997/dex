@@ -114,6 +114,7 @@ export function useDerivedSwapInfo(): {
   inputError?: string
   v1Trade: Trade | undefined
 } {
+  // 通过调用 useActiveWeb3React() 获取当前用户的账户信息 account
   const { account } = useActiveWeb3React()
 
   const toggledVersion = useToggledVersion()
@@ -216,6 +217,7 @@ export function useDerivedSwapInfo(): {
   }
 }
 
+// 从URL参数解析货币，默认给ETH
 function parseCurrencyFromURLParameter(urlParam: any): string {
   if (typeof urlParam === "string") {
     const valid = isAddress(urlParam)
@@ -272,6 +274,7 @@ export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
 }
 
 // updates the swap state to use the defaults for a given network
+// 设置默认的兑换货币
 export function useDefaultsFromURLSearch():
   | { inputCurrencyId: string | undefined; outputCurrencyId: string | undefined }
   | undefined {

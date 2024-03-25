@@ -1,16 +1,16 @@
-import { TokenAddressMap, useDefaultTokenList, useUnsupportedTokenList } from './../state/lists/hooks'
-import { parseBytes32String } from '@ethersproject/strings'
-import { Currency, ETHER, Token, currencyEquals } from '@uniswap/sdk'
-import { useMemo } from 'react'
-import { useCombinedActiveList, useCombinedInactiveList } from '../state/lists/hooks'
-import { NEVER_RELOAD, useSingleCallResult } from '../state/multicall/hooks'
-import { useUserAddedTokens } from '../state/user/hooks'
-import { isAddress } from '../utils'
+import { TokenAddressMap, useDefaultTokenList, useUnsupportedTokenList } from "@/state/lists/hooks"
+import { parseBytes32String } from "@ethersproject/strings"
+import { Currency, ETHER, Token, currencyEquals } from "@uniswap/sdk"
+import { useMemo } from "react"
+import { useCombinedActiveList, useCombinedInactiveList } from "@/state/lists/hooks"
+import { NEVER_RELOAD, useSingleCallResult } from "@/state/multicall/hooks"
+import { useUserAddedTokens } from "../state/user/hooks"
+import { isAddress } from "../utils"
 
-import { useActiveWeb3React } from './index'
-import { useBytes32TokenContract, useTokenContract } from './useContract'
-import { filterTokens } from '../components/SearchModal/filtering'
-import { arrayify } from 'ethers/lib/utils'
+import { useActiveWeb3React } from "./index"
+import { useBytes32TokenContract, useTokenContract } from "./useContract"
+import { filterTokens } from "@/utils/filtering"
+import { arrayify } from "ethers/lib/utils"
 
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
 function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean): { [address: string]: Token } {
@@ -52,7 +52,9 @@ export function useDefaultTokens(): { [address: string]: Token } {
 }
 
 export function useAllTokens(): { [address: string]: Token } {
+  // 获取所有的tokens
   const allTokens = useCombinedActiveList()
+  // 返回所有token的映射结构
   return useTokensFromMap(allTokens, true)
 }
 
@@ -96,7 +98,7 @@ export function useFoundOnInactiveList(searchQuery: string): Token[] | undefined
   const inactiveTokens = useAllInactiveTokens()
 
   return useMemo(() => {
-    if (!chainId || searchQuery === '') {
+    if (!chainId || searchQuery === "") {
       return undefined
     } else {
       const tokens = filterTokens(Object.values(inactiveTokens), searchQuery)
@@ -113,7 +115,7 @@ export function useIsUserAddedToken(currency: Currency | undefined | null): bool
     return false
   }
 
-  return !!userAddedTokens.find(token => currencyEquals(currency, token))
+  return !!userAddedTokens.find((token) => currencyEquals(currency, token))
 }
 
 // parse a name or symbol from a token response
@@ -141,16 +143,16 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
   const tokenContractBytes32 = useBytes32TokenContract(address ? address : undefined, false)
   const token: Token | undefined = address ? tokens[address] : undefined
 
-  const tokenName = useSingleCallResult(token ? undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
+  const tokenName = useSingleCallResult(token ? undefined : tokenContract, "name", undefined, NEVER_RELOAD)
   const tokenNameBytes32 = useSingleCallResult(
     token ? undefined : tokenContractBytes32,
-    'name',
+    "name",
     undefined,
     NEVER_RELOAD
   )
-  const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
-  const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
-  const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
+  const symbol = useSingleCallResult(token ? undefined : tokenContract, "symbol", undefined, NEVER_RELOAD)
+  const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, "symbol", undefined, NEVER_RELOAD)
+  const decimals = useSingleCallResult(token ? undefined : tokenContract, "decimals", undefined, NEVER_RELOAD)
 
   return useMemo(() => {
     if (token) return token
@@ -161,8 +163,8 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
         chainId,
         address,
         decimals.result[0],
-        parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], 'UNKNOWN'),
-        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token')
+        parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], "UNKNOWN"),
+        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], "Unknown Token")
       )
     }
     return undefined
@@ -177,12 +179,12 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
     token,
     tokenName.loading,
     tokenName.result,
-    tokenNameBytes32.result
+    tokenNameBytes32.result,
   ])
 }
 
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
-  const isETH = currencyId?.toUpperCase() === 'ETH'
+  const isETH = currencyId?.toUpperCase() === "ETH"
   const token = useToken(isETH ? undefined : currencyId)
   return isETH ? ETHER : token
 }

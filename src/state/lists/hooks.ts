@@ -61,7 +61,7 @@ export function listToTokenMap(list: TokenList): TokenAddressMap {
           })
           ?.filter((x): x is TagInfo => Boolean(x)) ?? []
       const token = new WrappedTokenInfo(tokenInfo, tags)
-      if (tokenMap[token.chainId][token.address] !== undefined) throw Error("Duplicate tokens.")
+      if (tokenMap[token.chainId]?.[token.address] !== undefined) throw Error("Duplicate tokens.")
       return {
         ...tokenMap,
         [token.chainId]: {
@@ -142,8 +142,11 @@ export function useInactiveListUrls(): string[] {
 
 // get all the tokens from active lists, combine with local default tokens
 export function useCombinedActiveList(): TokenAddressMap {
+  // 获取当前的active list
   const activeListUrls = useActiveListUrls()
+  // 通过列表数据获取所有的token
   const activeTokens = useCombinedTokenMapFromUrls(activeListUrls)
+  // 默认的token列表
   const defaultTokenMap = listToTokenMap(DEFAULT_TOKEN_LIST)
   return combineMaps(activeTokens, defaultTokenMap)
 }
