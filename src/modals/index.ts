@@ -1,7 +1,7 @@
 import { MutableRefObject } from "react"
 import { IModalRoot } from "./modal-root"
 
-type ModalCloseCallback = (callbackParams: unknown) => void
+type ModalCloseCallback = (callbackParams: any) => void
 
 class GlobalModal {
   private modalRef: MutableRefObject<IModalRoot | undefined>
@@ -11,7 +11,7 @@ class GlobalModal {
     this.modalRef = modalRef
   }
 
-  public show(key: string, extra?: Record<string, unknown>) {
+  public show<T>(key: string, extra?: T) {
     this.modalRef.current?.show(key, extra)
     return this
   }

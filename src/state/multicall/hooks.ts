@@ -49,6 +49,7 @@ export const NEVER_RELOAD: ListenerOptions = {
 }
 
 // the lowest level call for subscribing to contract data
+// 订阅合约数据的最低层调用
 function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): CallResult[] {
   const { chainId } = useActiveWeb3React()
   const callResults = useSelector<AppState, AppState["multicall"]["callResults"]>(
@@ -253,7 +254,6 @@ export function useSingleCallResult(
 
   const result = useCallsData(calls, options)[0]
   const latestBlockNumber = useBlockNumber()
-  // const latestBlockNumber = 0
 
   return useMemo(() => {
     return toCallState(result, contract?.interface, fragment, latestBlockNumber)

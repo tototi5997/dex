@@ -3,16 +3,24 @@ import c from "classnames"
 import { useTranslation } from "react-i18next"
 import IconButton from "../iconButton"
 import { Button, InputNumber } from "antd"
-import { useDefaultsFromURLSearch, useDerivedSwapInfo } from "@/state/swap/hooks"
+import { useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapActionHandlers } from "@/state/swap/hooks"
+import { SearchModalProps } from "@/modals/contents/search-modal"
 import CurrencySelect from "./CurrencySelect"
 import useModal from "@/hooks/useModal"
+import { useState } from "react"
+import { Field } from "@/state/swap/reducer"
 
 const Swapper = () => {
   const { t } = useTranslation()
 
   const loadedUrlParams = useDefaultsFromURLSearch()
 
+  const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
+
   const modal = useModal()
+
+  // check if user has gone through approval process, used to show two step buttons, reset on token change
+  const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
   const {
     // v1Trade,
@@ -25,8 +33,18 @@ const Swapper = () => {
 
   const currencyInput = currencies.INPUT
 
+  // token from selected
   const handleSelectCurrencyInput = () => {
-    modal?.show("search_modal")
+    modal
+      ?.show<SearchModalProps>("search_modal", {
+        currency: currencyInput,
+      })
+      ?.onClose((selectedCurrency) => {
+        // get seleted token
+        // reset 2 step UI for approvals
+        setApprovalSubmitted(false)
+        onCurrencySelection(Field.INPUT, selectedCurrency)
+      })
   }
 
   return (

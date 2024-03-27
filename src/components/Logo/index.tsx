@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Question from "@/assets/question-circle.png"
 
 interface ILogo {
   srcs: string[]
@@ -13,6 +14,8 @@ const Logo: React.FC<ILogo> = ({ srcs, alt, ...rest }) => {
   const [, refresh] = useState<number>(0)
 
   const src: string | undefined = srcs.find((src) => !BAD_SRCS[src])
+
+  if (!src) return <img {...rest} alt={alt} src={Question} />
 
   return (
     <img

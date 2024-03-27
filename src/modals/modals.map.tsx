@@ -4,8 +4,9 @@ import SearchModal from "./contents/search-modal"
 
 interface IModalMain {
   des?: string
-  component: () => JSX.Element
+  component: (props: any) => JSX.Element
   extraProps?: Record<string, unknown>
+  noPadding?: boolean
 }
 
 export type GlobalMoalType = IModalMain & ModalProps
@@ -24,9 +25,10 @@ const modalMap = new Map<string, GlobalMoalType>([
     "search_modal",
     {
       des: "",
-      component: () => <SearchModal />,
+      component: SearchModal,
       footer: null,
       width: 400,
+      noPadding: true,
     },
   ],
 ])

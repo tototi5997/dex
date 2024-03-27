@@ -97,6 +97,7 @@ export function useTokenBalance(account?: string, token?: Token): TokenAmount | 
   return tokenBalances[token.address]
 }
 
+// 根据账户和代币数组查询对应的代币余额
 export function useCurrencyBalances(
   account?: string,
   currencies?: (Currency | undefined)[]
@@ -122,6 +123,7 @@ export function useCurrencyBalances(
   )
 }
 
+// 通过账户和代币获取代币的余额
 export function useCurrencyBalance(account?: string, currency?: Currency): CurrencyAmount | undefined {
   return useCurrencyBalances(account, [currency])[0]
 }

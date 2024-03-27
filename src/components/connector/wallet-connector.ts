@@ -8,11 +8,15 @@ import { useMulticallContract } from "@/hooks/useContract"
 import { useMemo } from "react"
 import { isAddress } from "@/utils"
 import { useSingleContractMultipleData } from "@/state/multicall/hooks"
+import { Web3Provider } from "@ethersproject/providers"
+import { NetworkConnector } from "./NetworkConnector"
 
 const NETWORK_URL = import.meta.env.VITE_NETWORK_URL
 // const FORMATIC_KEY = import.meta.env.REACT_APP_FORTMATIC_KEY
 const PORTIS_ID = import.meta.env.VITE_PORTIS_ID
 const WALLETCONNECT_BRIDGE_URL = import.meta.env.VITE_WALLETCONNECT_BRIDGE_URL
+
+export const NETWORK_CHAIN_ID: number = parseInt(import.meta.env.VITE_CHAIN_ID ?? "1")
 
 if (typeof NETWORK_URL === "undefined") {
   // console.log(import.meta.env)
@@ -37,6 +41,15 @@ export const portis = new PortisConnector({
   dAppId: PORTIS_ID ?? "",
   networks: [1],
 })
+
+export const network = new NetworkConnector({
+  urls: { [NETWORK_CHAIN_ID]: NETWORK_URL },
+})
+
+let networkLibrary: Web3Provider | undefined
+export function getNetworkLibrary(): Web3Provider {
+  return (networkLibrary = networkLibrary ?? new Web3Provider(network.provider as any))
+}
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.

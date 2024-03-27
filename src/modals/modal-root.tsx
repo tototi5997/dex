@@ -2,9 +2,11 @@ import React, { useImperativeHandle, useState } from "react"
 import { Modal } from "antd"
 import modalMap, { GlobalMoalType } from "./modals.map"
 import GlobalModal from "."
+import c from "classnames"
+import s from "./modal.module.less"
 
 export interface IModalRoot {
-  show: (key: string, extra?: Record<string, unknown>) => void
+  show: <T>(key: string, extra?: T) => void
   hide: () => void
 }
 
@@ -28,7 +30,15 @@ const ModalRoot = React.forwardRef((_, ref) => {
   }))
 
   return (
-    <Modal open={visible} onCancel={() => setVisible(false)} {...modalProps}>
+    <Modal
+      open={visible}
+      onCancel={() => setVisible(false)}
+      wrapClassName={c({
+        [s.no_padding]: modalProps?.noPadding,
+      })}
+      destroyOnClose
+      {...modalProps}
+    >
       {modalProps?.component ? React.createElement(modalProps.component, modalProps?.extraProps) : null}
     </Modal>
   )

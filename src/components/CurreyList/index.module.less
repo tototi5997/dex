@@ -1,3 +1,32 @@
-.currency_row {
+.currency_row:not(.diabled_row) {
   height: 56px;
+
+  &:hover {
+    background-color: #F7F8FA;
+  }
+
+  .token_name {
+    color: #888D9B;
+  }
+}
+
+.diabled_row {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.popular_token {
+  width: max-content;
+  padding: 4px 12px;
+  outline: 1px solid rgba(34, 34, 34, 0.07);
+  border-radius: 18px;
+
+  &:hover {
+    background-color: rgba(152, 161, 192, 0.08);
+  }
+}
+
+.selected {
+  opacity: 0.5;
+  pointer-events: none;
 }

@@ -8,6 +8,9 @@ import ModalRoot, { ModalContext } from "./modals/modal-root"
 import useTheme from "./hooks/useTheme"
 import Web3ReactManager from "./components/Web3ReactManager"
 import useInitModal from "./hooks/useInitModal"
+import MulticallUpdater from "@/state/multicall/updater"
+// import ListUpdater from "@/state/lists/updater"
+import ApplicationUpdater from "@/state/application/updater"
 
 const App = () => {
   // 如果需要做路由级别的权限控制，可以在这里处理
@@ -32,10 +35,20 @@ const App = () => {
 }
 
 const AppContent = () => {
+  const Updater = () => {
+    return (
+      <>
+        <MulticallUpdater />
+        {/* <ListUpdater /> */}
+        <ApplicationUpdater />
+      </>
+    )
+  }
   return (
     <>
       <Web3ReactProvider getLibrary={getLibrary}>
         <Provider store={store}>
+          <Updater />
           <App />
         </Provider>
       </Web3ReactProvider>
